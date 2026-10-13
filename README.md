@@ -2,6 +2,8 @@
 
 An interactive explorer of world trade in plastics and in the natural and mineral materials that could replace them, 2005–2024.
 
+**Open it: https://seitarotaketani.github.io/plastics-substitutes-trade-explorer/**
+
 - **First page:** one "pizza" of world exports: plastics by stage of their life cycle, substitutes by raw materials and value-added
   products. The band under it is the same pizza over the years; a click on a slice takes that piece and cuts it by exporter.
 - **Explorer:** what (the pizza), where (United Nations map), when (time line). Exporters, importers, flows between economies, the
