@@ -1,0 +1,26 @@
+# This public repository holds the explorer exactly as it is served, and nothing else.
+# Everything at the top level is ignored unless it is listed below, so that a plain `git add .` can never publish
+# the raw data (several GB), internal notes, unpublished reference documents or local settings.
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/.github/
+!/dashboard/
+
+# Inside dashboard/: not part of the site.
+# qa/ = headless QA (its scripts hold local paths; its screenshots, 74 MB, are regenerated at every run)
+/dashboard/qa/
+# internal build notes
+/dashboard/README.md
+# draft page, not published until approved
+/dashboard/issues.html
+/dashboard/js/issues.js
+/dashboard/css/issues.css
+
+# Never
+~$*
+Thumbs.db
+desktop.ini
+.DS_Store
+*.tmp

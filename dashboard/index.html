@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plastics and their substitutes: global trade explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/unctad-icon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="loader"><div class="spin"></div><p id="loader-msg">Loading trade data…</p></div>
+
+<!-- First page: the world pizza of the factsheet. It lies in front of the explorer and is swept away by "Explore the dashboard". -->
+<section id="cover" class="cover off" aria-label="First page: one pizza of plastics and their substitutes">
+  <div class="cv-sheet"></div>
+  <div class="cv-art">
+  <div class="cv-top">
+    <img src="assets/unctad-icon.svg" alt="UNCTAD">
+    <span>UN Trade and Development (UNCTAD) &middot; Plastics and their substitutes in global trade</span>
+    <span class="sp"></span>
+    <button id="cv-method" class="btn-line">Methodology</button>
+  </div>
+  <div class="cv-text">
+    <p class="cv-eyebrow" id="cv-eyebrow"></p>
+    <h1>One pizza: <span class="c-p">plastics</span> and their <span class="c-s">substitutes</span></h1>
+    <p class="cv-lead" id="cv-lead"></p>
+    <div class="cv-nums" id="cv-nums"></div>
+    <div class="cv-card" id="cv-card" aria-live="polite"></div>
+    <!-- a piece taken from the pizza is cut here by exporter and stood up as triangles -->
+    <div class="cv-board hidden" id="cv-board" aria-live="polite">
+      <div class="cv-bh"><nav class="cv-crumbs" id="cv-crumbs" aria-label="Where this piece sits in the pizza"></nav><button id="cv-back" class="cv-x" title="Put the piece back (Esc)">× Put it back</button></div>
+      <div class="cv-bt" id="cv-bt"></div>
+      <div class="cv-cap" id="cv-cap"></div>
+      <svg id="cv-cut" viewBox="0 0 520 246" role="img" aria-label="Largest exporters of this piece"></svg>
+      <div class="cv-cap" id="cv-chips-cap"></div>
+      <div class="cv-chips" id="cv-chips"></div>
+    </div>
+    <div class="cv-cta">
+      <button id="cv-enter" class="cv-btn">Explore the dashboard <span aria-hidden="true">→</span></button>
+      <button id="cv-tour" class="btn-line">Take the 2-minute tour</button>
+    </div>
+    <p class="cv-src"><strong>Source:</strong> UNCTAD calculations based on UNCTADstat (experimental product groupings, HS 2022; UN Comtrade). Export value in current US$, as reported by exporters; “World” is the sum of reporting economies. After the SMEP factsheet “Plastics and their substitutes in global trade”.</p>
+  </div>
+  <div class="cv-stage">
+    <div class="cv-pizza" id="cv-pizza"><div class="cv-fy"><div class="cv-spin"><svg id="cover-pizza" class="pz" viewBox="-200 -200 400 400" role="img" aria-label="World exports of plastics and substitutes as one pizza"></svg></div></div></div>
+    <!-- the same pizza over the years (js/cover.js, "the ribbon"): drag it to choose the year; the range input is the same control for the keyboard -->
+    <div class="cv-year">
+      <button id="cv-play" class="icon" aria-label="Play the years" title="Play the years">▶</button>
+      <div class="cv-yr"><b id="cv-year-out"></b><span id="cv-year-tot"></span></div>
+      <div class="cv-rib" id="cv-rib">
+        <svg id="cv-ribbon" role="img" aria-label="World exports of plastics and substitutes in every year: the pizza above is this ribbon cut at the chosen year"></svg>
+        <input id="cv-range" type="range" step="1" aria-label="Year">
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="cv-blades" aria-hidden="true"><i class="b3"></i><i class="b2"></i><i class="b1"></i></div>
+  <button id="cv-edge" class="cv-edge" aria-label="Open the detailed dashboard" title="Open the detailed dashboard"><span>Detailed dashboard</span><b aria-hidden="true">→</b></button>
+</section>
+
+<header id="main-header">
+  <div class="header-inner">
+    <div class="header-title">
+      <img src="assets/unctad-icon.svg" alt="UNCTAD" class="header-logo" title="Back to the first page">
+      <div class="header-text">
+        <h3>One pizza: plastics and their substitutes in global trade</h3>
+        <h4>UNCTAD &middot; Who makes, sells and buys plastics and the natural and mineral materials that could replace them<span class="header-sources"> &middot; Export value, 2005–2024 &middot; Sources: UNCTADstat, UN&nbsp;Comtrade</span></h4>
+      </div>
+      <div class="header-actions">
+        <div class="search" id="search">
+          <input id="search-input" type="search" placeholder="Find an economy or a product…" autocomplete="off" aria-label="Find an economy, a group or a product slice" aria-controls="search-list">
+          <ul id="search-list" class="search-list hidden" role="listbox"></ul>
+        </div>
+        <select id="scope-sel" class="tb-sel" aria-label="Group of economies" title="Look at a group of economies"></select>
+        <button id="btn-story" class="btn-line">Story</button>
+        <button id="btn-method" class="btn-line">Methodology</button>
+        <button id="btn-link" class="btn-line" title="Copy a link to exactly this view">Copy link</button>
+        <button id="btn-reset" class="btn-line">Reset</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="kpi-bar"><div class="kpi-inner" id="kpis" aria-live="polite"></div>
+  <div class="tb-fld hidden" id="meas-fld"><span class="tb-cap">Measure</span>
+    <div class="tb-seg" id="meas" role="group" aria-label="Measure"><button class="btn-toggle" data-v="v" title="Export or import value in US$">US$</button><button class="btn-toggle" data-v="w" title="Tonnes. Offered for plastic waste only; economies whose weight cannot be relied on are hatched">Tonnes</button></div></div>
+</div>
+
+<main id="stage">
+  <aside id="dock" aria-label="What: product slices">
+    <div class="dock-head"><span class="cap">What</span><nav class="crumbs" id="crumbs" aria-label="Slice path"></nav><button id="btn-cover" class="dock-x" title="Back to the first page: the pizza on a full page">⤢ First page</button></div>
+    <div class="pizza-wrap"><svg id="pizza" class="pz" viewBox="-200 -200 400 400" role="img" aria-label="Sunburst of plastics and substitutes"></svg></div>
+    <div class="pizza-note" id="pizza-note"></div>
+    <div id="slice-list" class="slice-list"></div>
+  </aside>
+
+  <section id="mapwrap" aria-label="Where: world map">
+    <div class="map-top">
+      <div class="tb-fld"><span class="tb-cap" id="lens-cap">Map shows</span>
+        <div class="tb-seg" id="lens" role="group" aria-label="What the map, the chart and the table show">
+          <button class="btn-toggle" data-v="exp" title="Height of each spike = export value">Exporters</button>
+          <button class="btn-toggle" data-v="dst" title="Height of each spike = import value, as each economy reports it">Importers</button>
+          <button class="btn-toggle" data-v="flows" title="Moving dots = exports from one economy to another">Flows</button>
+          <button class="btn-toggle" data-v="mix" title="Colour = is the economy’s pizza mostly plastics or mostly substitutes?">Which side</button>
+          <div class="more"><button class="btn-toggle" id="lens-more" aria-haspopup="true" aria-expanded="false" title="More questions">More maps ▾</button>
+            <div class="menu hidden" id="lens-menu" role="menu">
+              <button role="menuitem" data-v="net"><b>Balance</b><span>net exporters and net importers of the slice</span></button>
+              <button role="menuitem" data-v="rca"><b>Specialisation</b><span>RCA, or the weight of the slice in each economy’s exports</span></button>
+            </div></div>
+        </div>
+      </div>
+      <div class="tb-fld"><div class="tb-seg" id="view" role="group" aria-label="View"><button class="btn-toggle" data-v="map">Map</button><button class="btn-toggle" data-v="scatter" title="The same question as a chart: economies or slices against each other">Compare</button><button class="btn-toggle" data-v="table" title="All economies with their indicators, sortable">Table</button></div></div>
+      <div id="scope" class="scope hidden"></div>
+    </div>
+    <svg id="map" role="img" aria-label="World map (UN boundaries)"></svg>
+    <canvas id="flowcanvas"></canvas>
+    <svg id="mapover" aria-hidden="true"></svg>
+    <div id="scatter" class="hidden"></div>
+    <div id="tableview" class="hidden"></div>
+    <div id="legend" class="legend"></div>
+    <div class="zoomctl"><button id="zglobe" aria-label="Switch between flat map and globe" title="Globe view: drag to rotate" aria-pressed="false">◍</button><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button><button id="zreset" aria-label="Reset zoom" title="Reset zoom">⌂</button><button id="zshot" aria-label="Download this view as an image" title="Download this view as an image (PNG)">⤓</button></div>
+    <div id="story" class="story hidden" role="region" aria-label="Story"></div>
+    <div id="mapmsg" class="mapmsg hidden"></div>
+  </section>
+
+  <aside id="panel" aria-label="Details"></aside>
+</main>
+
+<section id="timeline" aria-label="When: years">
+  <button id="play" class="icon" aria-label="Play years" title="Play">▶</button>
+  <div class="tl-year"><span class="cap">When</span><b id="year-out">2023</b></div>
+  <div id="tl" class="tl"></div>
+</section>
+
+<footer id="foot">
+  <p><strong>Source:</strong> UNCTAD calculations based on UNCTADstat “Plastics trade by partner” and “Trade in non-plastic substitutes” (experimental, HS 2022 groupings; UN Comtrade), and UNCTADstat GDP, population and total merchandise trade. Value in current US$ as each economy reports it: exports by the exporter, imports by the importer († where it did not report: as reported by the exporters); “World” is the sum of reporting economies. <span id="foot-year"></span></p>
+  <p><strong>Map:</strong> The boundaries and names shown and the designations used on this map do not imply official endorsement or acceptance by the United Nations. Dotted and dashed lines represent approximate borders for which the final status has not yet been agreed.</p>
+</footer>
+
+<div id="tip" class="tip hidden"></div>
+<dialog id="method"><div class="method-in"><button id="method-close" class="btn-line" aria-label="Close">Close</button><div id="method-body"></div></div></dialog>
+
+<script src="js/vendor/d3.min.js"></script>
+<script src="js/vendor/topojson-client.min.js"></script>
+<script src="assets/un_map.js"></script>
+<script src="data/meta.js"></script>
+<script src="data/totals.js"></script>
+<script src="data/weights.js"></script>
+<script src="data/econ.js"></script>
+<script src="data/regions.js"></script>
+<script src="js/core.js"></script>
+<script src="js/pizza.js"></script>
+<script src="js/map.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/panel.js"></script>
+<script src="js/scatter.js"></script>
+<script src="js/table.js"></script>
+<script src="js/story.js"></script>
+<script src="js/cover.js"></script>
+<script src="js/app.js"></script>
+<script src="js/snapshot.js"></script>
+<script>
+if (!window.NP || !window.NP.app) { document.querySelector("#loader .spin").style.display = "none";
+  document.getElementById("loader-msg").textContent = "The explorer could not start: a data or script file did not load. Check that the data/, js/ and assets/ folders sit next to index.html."; }
+</script>
+</body>
+</html>

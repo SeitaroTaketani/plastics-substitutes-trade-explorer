@@ -1,0 +1,7 @@
+# Text is stored with LF in the repository whatever the editor writes; the data scripts are large single lines and are never diffed.
+* text=auto eol=lf
+*.png binary
+dashboard/data/** -diff
+dashboard/assets/un_map.js -diff
+dashboard/assets/*.topo.json -diff
+dashboard/js/vendor/** -diff
